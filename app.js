@@ -1,6 +1,6 @@
 const combustiveis = {
   gasolina: {min:715, max:770},
-  etanol: {min:806, max:815},
+  etanol: {min:806.0, max:815.0},
   diesel: {min:815, max:850},
   diesel500: {min:815, max:865}
 };
