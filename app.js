@@ -1,22 +1,24 @@
 const combustiveis = {
-  gasolina: {min:715, max:770},
-  etanol: {min:806.0, max:815.0},
-  diesel: {min:815, max:850},
-  diesel500: {min:815, max:865}
+  gasolina: {min:715, max:770, coef: 0.00064},
+  etanol: {min:806.0, max:815.0, coef: 0.00109},
+  diesel: {min:815, max:850, coef: 0.00064},
+  diesel500: {min:815, max:865, coef: 0.00064}
 };
-function corr(d, t) {
-  const fator = 1 + 0.00064 * (t - 20);
+
+function corr(d, t, coef) {
+  const fator = 1 + coef * (t - 20);
   return d / fator;
 }
+
 document.getElementById('check').addEventListener('click', ()=> {
   let density = parseFloat(document.getElementById('density').value);
   const unit = document.getElementById('unit').value;
   const t = parseFloat(document.getElementById('temp').value);
   if(unit==='g') density*=1000;
   if(isNaN(density)||isNaN(t)) return;
-  const d20 = corr(density, t);
   const fuel = document.getElementById('fuel').value;
   const spec = combustiveis[fuel];
+  const d20 = corr(density, t, spec.coef);
   const dentro = d20>=spec.min && d20<=spec.max;
   const resDiv = document.getElementById('result');
   resDiv.style.background = dentro?'#16a34a':'#dc2626';
